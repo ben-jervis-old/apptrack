@@ -4,7 +4,7 @@ class ApplicationsController < ApplicationController
   # GET /applications
   # GET /applications.json
   def index
-    @applications = Application.all
+    @applications = current_user.company.applications
   end
 
   # GET /applications/1
@@ -12,6 +12,7 @@ class ApplicationsController < ApplicationController
   def show
 		@notes = @application.notes.all
 		@note = @application.notes.build
+		@note.user_id = current_user.id
 		@owner = User.find(@application.owner_id)
   end
 
@@ -28,29 +29,22 @@ class ApplicationsController < ApplicationController
   # POST /applications.json
   def create
     @application = Application.new(application_params)
-
-    respond_to do |format|
-      if @application.save
-        format.html { redirect_to @application, notice: 'Application was successfully created.' }
-        format.json { render :show, status: :created, location: @application }
-      else
-        format.html { render :new }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
-      end
+    if @application.save
+			flash[:success] = 'Application was successfully created.'
+      redirect_to @application
+    else
+      render :new
     end
   end
 
   # PATCH/PUT /applications/1
   # PATCH/PUT /applications/1.json
   def update
-    respond_to do |format|
-      if @application.update(application_params)
-        format.html { redirect_to @application, notice: 'Application was successfully updated.' }
-        format.json { render :show, status: :ok, location: @application }
-      else
-        format.html { render :edit }
-        format.json { render json: @application.errors, status: :unprocessable_entity }
-      end
+    if @application.update(application_params)
+			flash[:success] = 'Application was successfully updated.'
+			redirect_to @application
+    else
+    	render :edit
     end
   end
 

@@ -11,39 +11,57 @@
     </div>
   <% end %>
 
-  <div class="form-group">
-    <%= f.label :name %>
-    <%= f.text_field :name, class: 'form-control' %>
-  </div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :name %>
+		    <%= f.text_field :name, class: 'form-control' %>
+		  </div>
+		</div>
 
-  <div class="form-group">
-    <%= f.label :amount %>
-    <%= f.text_field :amount, class: 'form-control' %>
-  </div>
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :amount %>
+		    <%= f.text_field :amount, class: 'form-control' %>
+		  </div>
+		</div>
 
-  <div class="form-group">
-    <%= f.label :lender %>
-    <%= f.text_field :lender, class: 'form-control' %>
-  </div>
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :lender %>
+		    <%= f.text_field :lender, class: 'form-control' %>
+		  </div>
+		</div>
 
-	<div class="form-group">
-    <%= f.label :activity %>
-    <%= f.text_field :activity, class: 'form-control' %>
-  </div>
+	</div>
 
-	<div class="form-group">
-    <%= f.label :owner_id %>
-    <%= f.text_field :owner_id, class: 'form-control' %>
-  </div>
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :activity %>
+		    <%= f.text_field :activity, class: 'form-control' %>
+		  </div>
+		</div>
 
-	<div class="form-group">
-    <%= f.label :waiting_on %>
-    <%= f.text_field :waiting_on, class: 'form-control' %>
-  </div>
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :owner_id %>
+		    <%= f.text_field :owner_id, class: 'form-control' %>
+		  </div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :waiting_on %>
+		    <%= f.text_field :waiting_on, class: 'form-control' %>
+		  </div>
+		</div>
+	</div>
 
 	<%= f.hidden_field :company_id %>
 
   <div class="actions">
     <%= f.submit 'Save', class: 'btn btn-primary'%>
+		<%= link_to 'Cancel', applications_path, class: 'btn btn-default pull-right' %>
   </div>
 <% end %>

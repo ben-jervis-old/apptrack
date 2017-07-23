@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :notes
+	resources :companies, 	only: [:show, :new, :create]
   resources :applications
 	resources :users
 	resources :account_activations, only: [:edit]

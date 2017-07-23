@@ -1,0 +1,12 @@
+<nav class="navbar navbar-inverse">
+	<div class="container">
+		<div class="navbar-header">
+			<%= link_to 'AppTrack', root_path, class: 'navbar-brand' %>
+		</div>
+
+		<ul class="nav navbar-nav navbar-right">
+			<li><%= link_to 'Applications', applications_path %></li>
+			<li><%= link_to 'Company', current_user.company %></li>
+		</ul>
+	</div>
+</nav>
