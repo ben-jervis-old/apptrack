@@ -1,0 +1,82 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @application.name %>
+</p>
+
+<p>
+  <strong>Amount:</strong>
+  <%= number_to_currency(@application.amount, precision: 0) %>
+</p>
+
+<p>
+  <strong>Lender:</strong>
+  <%= @application.lender %>
+</p>
+
+<p>
+  <strong>Activity:</strong>
+  <%= @application.activity %>
+</p>
+
+<p>
+  <strong>Owner:</strong>
+  <%= @application.owner %>
+</p>
+
+<p>
+  <strong>Waiting On:</strong>
+  <%= @application.waiting_on %>
+</p>
+
+<%= link_to 'Edit', edit_application_path(@application) %> |
+<%= link_to 'Back', applications_path %> |
+<%= link_to 'Delete', @application, method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<h3>Notes</h3>
+<% @notes.each do |note| %>
+	<div>
+		<p>
+			<%= note.body %>
+		</p>
+		<h5>- <%= note.user %>, <%= time_ago_in_words(note.created_at.in_time_zone('Australia/Sydney')) %> ago</h5>
+	</div>
+<% end %>
+<div class="panel panel-default">
+	<div class="panel-heading">
+		<h3 class='panel-title'>
+			<%= link_to 'New Note', '#new-note-form', 'data-toggle' => 'collapse' %>
+		</h3>
+	</div>
+	<div id='new-note-form' class="panel-body collapsible collapse">
+		<%= form_for(@note) do |f| %>
+			<% if @note.errors.any? %>
+				<div id="error_explanation">
+					<h2><%= pluralize(@note.errors.count, "error") %> prohibited this note from being saved:</h2>
+
+					<ul>
+					<% @note.errors.full_messages.each do |message| %>
+						<li><%= message %></li>
+					<% end %>
+					</ul>
+				</div>
+			<% end %>
+
+			<%= f.hidden_field :application_id %>
+
+			<div class="form-group">
+				<%= f.label :body %>
+				<%= f.text_area :body, class: 'form-control' %>
+			</div>
+			<div class="form-group">
+				<%= f.label :user %>
+				<%= f.text_field :user, class: 'form-control' %>
+			</div>
+			<div class="form-group">
+		    <%= f.submit class: 'btn btn-primary' %>
+		  </div>
+		<% end %>
+	</div>
+
+</div>

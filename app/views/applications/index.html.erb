@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Applications</h1>
+
+<table class='table'>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Amount</th>
+      <th>Lender</th>
+			<th>Created</th>
+			<th>Last Updated</th>
+			<th>Most Recent Note</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @applications.each do |application| %>
+      <tr>
+        <td><%= link_to application.name, application %></td>
+        <td><%= number_to_currency(application.amount, precision: 0) %></td>
+        <td><%= application.lender %></td>
+				<td><%= application.created_at.in_time_zone('Australia/Sydney').strftime('%l:%m%P %d/%m/%y') %></td>
+				<td><%= application.updated_at.in_time_zone('Australia/Sydney').strftime('%l:%m%P %d/%m/%y') %></td>
+				<td><%= "#{application.notes.last.user}: #{application.notes.last.body}" if application.notes.count > 0 %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to 'New Application', new_application_path %>

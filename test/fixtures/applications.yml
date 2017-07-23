@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  company: one
+  name: MyString
+  amount: 1
+  lender: MyString
+  activity: MyString
+  waiting_on: MyString
+  owner_id: 1
+
+two:
+  company: two
+  name: MyString
+  amount: 1
+  lender: MyString
+  activity: MyString
+  waiting_on: MyString
+  owner_id: 1
