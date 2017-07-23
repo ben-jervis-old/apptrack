@@ -12,11 +12,12 @@ class ApplicationsController < ApplicationController
   def show
 		@notes = @application.notes.all
 		@note = @application.notes.build
+		@owner = User.find(@application.owner_id)
   end
 
   # GET /applications/new
   def new
-    @application = Application.new
+    @application = current_user.company.applications.build
   end
 
   # GET /applications/1/edit
@@ -71,6 +72,6 @@ class ApplicationsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def application_params
-      params.require(:application).permit(:name, :amount, :lender, :activity, :owner, :waiting_on)
+      params.require(:application).permit(:name, :amount, :lender, :activity, :owner_id, :waiting_on, :company_id)
     end
 end
