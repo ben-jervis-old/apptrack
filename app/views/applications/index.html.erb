@@ -1,6 +1,7 @@
-<p id="notice"><%= notice %></p>
+<div class="page-header">
+	<h1><%= current_user.company.name %></h1>
+</div>
 
-<h1><%= current_user.company.name %></h1>
 
 <table class='table'>
   <thead>
@@ -19,7 +20,7 @@
       <tr>
         <td><%= link_to application.name, application %></td>
         <td><%= number_to_currency(application.amount, precision: 0) %></td>
-        <td><%= application.lender %></td>
+        <td><%= current_user.company.lenders.find(application.lender_id).name %></td>
 				<td><%= application.created_at.in_time_zone('Australia/Sydney').strftime('%l:%m%P %d/%m/%y') %></td>
 				<td><%= application.updated_at.in_time_zone('Australia/Sydney').strftime('%l:%m%P %d/%m/%y') %></td>
 				<% if application.notes.count > 0 %>

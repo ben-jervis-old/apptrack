@@ -22,6 +22,10 @@ class User < ApplicationRecord
 		"#{self.first_name} #{self.last_name}"
 	end
 
+	def is_admin?
+		self.level == 'admin'
+	end
+
 	def remember
 		self.remember_token = User.new_token
 		update_attribute(:remember_digest, User.digest(remember_token))

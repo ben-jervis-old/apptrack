@@ -10,18 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170723134013) do
+ActiveRecord::Schema.define(version: 20170724041735) do
+
+  create_table "activities", force: :cascade do |t|
+    t.string   "name"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_activities_on_company_id"
+  end
 
   create_table "applications", force: :cascade do |t|
     t.integer  "company_id"
     t.string   "name"
     t.integer  "amount"
-    t.string   "lender"
-    t.string   "activity"
     t.string   "waiting_on"
     t.integer  "owner_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.integer  "lender_id"
+    t.integer  "activity_id"
     t.index ["company_id"], name: "index_applications_on_company_id"
   end
 
@@ -29,6 +37,15 @@ ActiveRecord::Schema.define(version: 20170723134013) do
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "lenders", force: :cascade do |t|
+    t.string   "name"
+    t.boolean  "favourite"
+    t.integer  "company_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["company_id"], name: "index_lenders_on_company_id"
   end
 
   create_table "notes", force: :cascade do |t|

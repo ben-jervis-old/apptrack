@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @lender.name %>
+</p>
+
+<p>
+  <strong>Favourite:</strong>
+  <%= @lender.favourite %>
+</p>
+
+<%= link_to 'Edit', edit_lender_path(@lender) %> |
+<%= link_to 'Back', lenders_path %>

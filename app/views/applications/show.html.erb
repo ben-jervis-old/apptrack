@@ -12,7 +12,7 @@
 </div>
 
 <div class="row">
-	<p>Application for a <%= number_to_currency(@application.amount, precision: 0) %> <%= @application.activity.downcase %> at <%= @application.lender %>.
+	<p>Application for a <%= number_to_currency(@application.amount, precision: 0) %> <%= @activity_type.downcase %> at <%= @lender_name %>.
 	</p>
 
 	<p>

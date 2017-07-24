@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :lenders
   resources :notes
 	resources :companies, 	only: [:show, :new, :create]
   resources :applications
