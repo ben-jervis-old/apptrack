@@ -1,8 +1,6 @@
 class LendersController < ApplicationController
   before_action :set_lender, only: [:show, :edit, :update, :destroy]
 
-	belongs_to :company
-
   # GET /lenders
   # GET /lenders.json
   def index
