@@ -27,6 +27,31 @@
 	</div>
 </script>
 
+<script type="text/x-template" id="activity-row">
+	<div v-if='editMode'>
+		<form @submit='updateActivity'>
+			<div class="input-group">
+				<input class="form-control" type='text' v-model='activity.name'>
+				<span class="input-group-btn">
+					<button class="btn btn-default" @click='updateActivity'>
+						<%= icon('floppy-o') %>
+					</button>
+					<button class="btn btn-default" @click='deleteActivity'>
+						<%= icon('trash-o') %>
+					</button>
+				</span>
+			</div>
+		</form>
+	</div>
+	<div v-else>
+		<h4>
+			<a href='#' @click='toggleEditMode'>
+				{{ activity.name }}
+			</a>
+		</h4>
+	</div>
+</script>
+
 <div class="page-header">
 	<h1>Administrative Functions</h1>
 </div>
@@ -63,10 +88,20 @@
 				<h3 class='panel-title'>Manage Activities</h3>
 			</div>
 			<div class="list-group" id="manage-activities">
-				<div class="list-group-item" v-for='activity in activities'>
-					<h4>
-						{{ activity.name }}
-					</h4>
+				<div class="list-group-item" is="activity-row" v-for='activity in activities' :activity='activity'>
+				</div>
+				<div class="list-group-item">
+					<form @submit='addActivity'>
+						<div class="input-group">
+							<input class="form-control" type='text' v-model='activity.name'>
+							<span class="input-group-btn">
+								<button class="btn btn-default" @click='addActivity'>
+									<i class="glyphicon glyphicon-plus"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+					<div class='alert alert-danger' v-if='errors.length > 0'>{{ errors.name }}</div>
 				</div>
 			</div>
 		</div>

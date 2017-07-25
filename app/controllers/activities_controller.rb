@@ -4,7 +4,7 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.all
+    @activities = Activity.all.sort_by(&:name)
 		respond_to do |format|
 			format.html
 			format.json { render json: @activities }
@@ -18,7 +18,7 @@ class ActivitiesController < ApplicationController
 
   # GET /activities/new
   def new
-    @activity = activity.new
+    @activity = Activity.new
   end
 
   # GET /activities/1/edit
@@ -28,15 +28,16 @@ class ActivitiesController < ApplicationController
   # POST /activities
   # POST /activities.json
   def create
-    @activity = activity.new(activity_params)
+    @activity = Activity.new(activity_params)
+		@activity.company_id = current_user.company_id
 
     respond_to do |format|
       if @activity.save
         format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
-        format.json { render :show, status: :created, location: @activity }
+        format.json { render json: @activity }
       else
         format.html { render :new }
-        format.json { render json: @activity.errors, status: :unprocessable_entity }
+        format.json { render json: { errors: @activity.errors.messages }, status: 422 }
       end
     end
   end
@@ -46,11 +47,11 @@ class ActivitiesController < ApplicationController
   def update
     respond_to do |format|
       if @activity.update(activity_params)
-        format.html { redirect_to @activity, notice: 'activity was successfully updated.' }
-        format.json { render :show, status: :ok, location: @activity }
+        format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
+        format.json { render json: @activity }
       else
         format.html { render :edit }
-        format.json { render json: @activity.errors, status: :unprocessable_entity }
+        format.json { render json: { errors: @activity.errors.messages }, status: 422 }
       end
     end
   end
@@ -60,15 +61,15 @@ class ActivitiesController < ApplicationController
   def destroy
     @activity.destroy
     respond_to do |format|
-      format.html { redirect_to activities_url, notice: 'activity was successfully destroyed.' }
-      format.json { head :no_content }
+      format.html { redirect_to activities_url, notice: 'Activity was successfully destroyed.' }
+      format.json { render json: {}, status: :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_activity
-      @activity = activity.find(params[:id])
+      @activity = Activity.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

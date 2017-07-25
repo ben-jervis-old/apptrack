@@ -107,7 +107,12 @@ Vue.component('lender-row', {
 var activities = new Vue({
 	el: '#manage-activities',
 	data: {
-		activities: []
+		activities: [],
+		activity: {
+			name: '',
+		},
+		errors: {},
+		editMode: false
 	},
 	mounted: function() {
 		var that;
@@ -118,5 +123,77 @@ var activities = new Vue({
 				that.activities = res;
 			}
 		});
+	},
+	methods: {
+		addActivity: function(e) {
+			e.preventDefault();
+			var that = this;
+
+			$.ajax({
+				method: 'POST',
+				data: {
+					activity: that.activity,
+				},
+				url: '/activities.json',
+				success: function(res) {
+					that.errors = {}
+					that.activities.push(res);
+					that.activity.name = '';
+				},
+				error: function(res) {
+					that.errors = res.responseJSON.errors
+				}
+			})
+		},
 	}
 });
+
+Vue.component('activity-row', {
+	template: '#activity-row',
+	props: {
+		activity: Object
+	},
+	data: function() {
+		return {
+			editMode: false,
+			errors: {}
+		}
+	},
+	methods: {
+		updateActivity: function(e) {
+			e.preventDefault();
+			var that = this;
+			$.ajax({
+				method: 'PUT',
+				data: {
+					activity: that.activity,
+				},
+				url: '/activities/' + that.activity.id + '.json',
+				success: function(res) {
+					that.errors = {}
+					that.activity = res
+					that.editMode = false
+				},
+				error: function(res) {
+					that.errors = res.responseJSON.errors
+				}
+			})
+		},
+		toggleEditMode: function(e) {
+			e.preventDefault();
+			this.editMode = true;
+		},
+		deleteActivity: function() {
+			var that = this;
+			if(confirm('Delete ' + that.activity.name + '?')){
+				$.ajax({
+					method: 'DELETE',
+					url: '/activities/' + that.activity.id + '.json',
+					success: function(res) {
+						that.$el.remove();
+					}
+				})
+			}
+		}
+	}
+})
