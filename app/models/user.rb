@@ -1,7 +1,7 @@
 class User < ApplicationRecord
 	attr_accessor :remember_token, :activation_token, :reset_token
 
-	belongs_to :company
+	belongs_to :company, optional: true
 
 	has_secure_password
 

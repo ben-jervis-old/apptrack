@@ -16,3 +16,11 @@
 
  @import 'bootstrap-sprockets';
  @import 'bootstrap';
+
+ label.checkbox.inline {
+ 	padding-left: 20px;
+ }
+
+ form .double-input-row {
+	 margin-bottom: 15px;
+ }

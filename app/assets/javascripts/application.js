@@ -15,3 +15,25 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+var doc_ready = function() {
+	$('#login-page-tabs a').click(function(e) {
+		e.preventDefault();
+		$(this).tab('show');
+	});
+
+	$('#login-page-tabs a:first').tab('show');
+
+	$('#register-tab-button').click(function(e) {
+		e.preventDefault();
+		$('#login-page-tabs a:last').tab('show');
+	});
+
+	$('#login-tab-button').click(function(e) {
+		e.preventDefault();
+		$('#login-page-tabs a:first').tab('show');
+	});
+}
+
+$(document).ready(doc_ready);
+$(document).on('turbolinks:load', doc_ready);

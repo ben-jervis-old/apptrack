@@ -1,0 +1,58 @@
+<div class="page-header">
+	<h1>Register</h1>
+</div>
+<%= form_for @company do |f| %>
+	<%= render 'partials/error_messages', item: @company %>
+	<div class="form-group">
+		<%= f.label :name, 'Company Name' %>
+		<%= f.text_field :name, class: 'form-control' %>
+	</div>
+
+	<%= f.fields_for :users do |u| %>
+		<!-- <%= render 'partials/error_messages', item: @company %> -->
+		<%= u.label :name, 'Your Name' %>
+		<div class='row double-input-row'>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= u.text_field :first_name, class: 'form-control col-md-6', placeholder: 'First Name' %>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= u.text_field :last_name, class: 'form-control col-md-6', placeholder: 'Last Name' %>
+				</div>
+			</div>
+		</div>
+
+		<%= u.label :email, 'Your Email' %>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="form-group">
+					<%= u.email_field :email, class: 'form-control' %>
+				</div>
+			</div>
+		</div>
+
+		<%= u.label :password %>
+		<div class='row double-input-row'>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= u.password_field :password, class: 'form-control col-md-6', placeholder: 'Password' %>
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="form-group">
+					<%= u.password_field :password_confirmation, class: 'form-control col-md-6', placeholder: 'Confirm Password' %>
+				</div>
+			</div>
+		</div>
+	<% end %>
+	<br>
+	<%= f.submit 'Register', class: 'btn btn-primary btn-lg btn-block' %>
+	<br>
+	<p class='text-center'>
+		Already on AppTrack? <a href='#' id='login-tab-button'>Log in</a> to your account here.
+	</p>
+<% end %>
+<%= debug @company %>
+<%= debug @company.users %>
