@@ -15,9 +15,20 @@ class ApplicationsController < ApplicationController
 		@notes = @application.notes.all
 		@note = @application.notes.build
 		@note.user_id = current_user.id
+
+		if Activity.where(id: @application.activity_id).empty?
+			@activity_type = 'Deleted Activity'
+		else
+			@activity_type = this_company.activities.find(@application.activity_id).name
+		end
+
 		@owner = User.find(@application.owner_id)
-		@activity_type = this_company.activities.find(@application.activity_id).name
-		@lender_name = this_company.lenders.find(@application.lender_id).name
+
+		if Lender.where(id: @application.lender_id).empty?
+			@lender_name = 'Deleted Lender'
+		else
+			@lender_name = this_company.lenders.find(@application.lender_id).name
+		end
   end
 
   # GET /applications/new
