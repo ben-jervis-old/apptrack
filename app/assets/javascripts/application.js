@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
+//= require vue
 //= require_tree .
 
 var doc_ready = function() {

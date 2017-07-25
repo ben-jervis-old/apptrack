@@ -1,0 +1,74 @@
+<script type="text/x-template" id="lender-row">
+	<div v-if='editMode'>
+		<form @submit='updateLender'>
+			<div class="input-group">
+				<input class="form-control" type='text' v-model='lender.name'>
+				<span class="input-group-btn">
+					<button class="btn btn-default" @click='updateLender'>
+						<%= icon('floppy-o') %>
+					</button>
+					<button class="btn btn-default" @click='deleteLender'>
+						<%= icon('trash-o') %>
+					</button>
+				</span>
+			</div>
+		</form>
+	</div>
+	<div v-else>
+		<h4>
+			<a href='#' @click='toggleEditMode'>
+				{{ lender.name }}
+			</a>
+			<a href='#' @click='toggleFavouriteStatus'>
+				<%= icon('star', 'v-if' => 'lender.favourite', class: 'pull-right') %>
+				<%= icon('star-o', 'v-else' => '', class: 'pull-right') %>
+			</a>
+		</h4>
+	</div>
+</script>
+
+<div class="page-header">
+	<h1>Administrative Functions</h1>
+</div>
+
+<div class="row">
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class='panel-title'>Manage Lenders</h3>
+			</div>
+			<div class="list-group" id="manage-lenders">
+				<div class="list-group-item" is="lender-row" v-for='lender in lenders' :lender='lender'>
+				</div>
+				<div class="list-group-item">
+					<form @submit='addLender'>
+						<div class="input-group">
+							<input class="form-control" type='text' v-model='lender.name'>
+							<span class="input-group-btn">
+								<button class="btn btn-default" @click='addLender'>
+									<i class="glyphicon glyphicon-plus"></i>
+								</button>
+							</span>
+						</div>
+					</form>
+					<div class='alert alert-danger' v-if='errors.length > 0'>{{ errors.name }}</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="col-sm-6">
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class='panel-title'>Manage Activities</h3>
+			</div>
+			<div class="list-group" id="manage-activities">
+				<div class="list-group-item" v-for='activity in activities'>
+					<h4>
+						{{ activity.name }}
+					</h4>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

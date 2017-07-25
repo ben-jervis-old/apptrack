@@ -4,7 +4,11 @@ class LendersController < ApplicationController
   # GET /lenders
   # GET /lenders.json
   def index
-    @lenders = Lender.all
+    @lenders = Lender.all.sort_by(&:name)
+		respond_to do |format|
+			format.html
+			format.json { render json: @lenders }
+		end
   end
 
   # GET /lenders/1
@@ -25,14 +29,15 @@ class LendersController < ApplicationController
   # POST /lenders.json
   def create
     @lender = Lender.new(lender_params)
+		@lender.company_id = current_user.company_id
 
     respond_to do |format|
       if @lender.save
         format.html { redirect_to @lender, notice: 'Lender was successfully created.' }
-        format.json { render :show, status: :created, location: @lender }
+        format.json { render json: @lender }
       else
         format.html { render :new }
-        format.json { render json: @lender.errors, status: :unprocessable_entity }
+        format.json { render json: { errors: @lender.errors.messages }, status: 422 }
       end
     end
   end
@@ -43,10 +48,10 @@ class LendersController < ApplicationController
     respond_to do |format|
       if @lender.update(lender_params)
         format.html { redirect_to @lender, notice: 'Lender was successfully updated.' }
-        format.json { render :show, status: :ok, location: @lender }
+        format.json { render json: @lender }
       else
         format.html { render :edit }
-        format.json { render json: @lender.errors, status: :unprocessable_entity }
+        format.json { render json: { errors: @lender.errors.messages }, status: 422 }
       end
     end
   end
@@ -57,7 +62,7 @@ class LendersController < ApplicationController
     @lender.destroy
     respond_to do |format|
       format.html { redirect_to lenders_url, notice: 'Lender was successfully destroyed.' }
-      format.json { head :no_content }
+      format.json { render json: {}, status: :no_content }
     end
   end
 

@@ -14,7 +14,7 @@
 						<li><%= link_to 'Company', current_user.company %></li>
 						<li><%= link_to 'Applications', applications_path %></li>
 						<li><%= link_to 'My Profile', current_user %></li>
-						<li><%= link_to 'Admin', '#Admin' if current_user.is_admin? %></li>
+						<li><%= link_to 'Admin', admin_path if current_user.is_admin? %></li>
 						<li class="divider" role='separator'></li>
 						<li><%= link_to 'Log Out', logout_path, method: :delete %></li>
 					</ul>

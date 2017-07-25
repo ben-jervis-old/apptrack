@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
+  get '/admin', to: 'admin#index'
+
   resources :lenders
+	resources :activities
   resources :notes
 	resources :companies, 	only: [:show, :new, :create]
   resources :applications
