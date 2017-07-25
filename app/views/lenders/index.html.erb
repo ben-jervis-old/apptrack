@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Lenders</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Favourite</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @lenders.each do |lender| %>
+      <tr>
+        <td><%= lender.name %></td>
+        <td><%= lender.favourite %></td>
+        <td><%= link_to 'Show', lender %></td>
+        <td><%= link_to 'Edit', edit_lender_path(lender) %></td>
+        <td><%= link_to 'Destroy', lender, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Lender', new_lender_path %>

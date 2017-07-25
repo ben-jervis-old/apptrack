@@ -1,0 +1,91 @@
+<%= form_for(application) do |f| %>
+  <% if application.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(application.errors.count, "error") %> prohibited this application from being saved:</h2>
+
+      <ul>
+      <% application.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :name %>
+		    <%= f.text_field :name, class: 'form-control' %>
+		  </div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :amount %>
+				<div class="input-group">
+					<span class="input-group-addon">$</span>
+					<%= f.text_field :amount, class: 'form-control' %>
+				</div>
+		  </div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :lender_id %>
+				<%= f.select :lender_id, {}, {}, class: 'form-control' do %>
+					<option disabled <%= 'selected' if @application.lender_id.nil? %>>Choose a lender...</option>
+					<optgroup label="Favourites">
+						<%= @fav_lenders.each do |lender| %>
+							<option value='<%= lender.id %>' <%= 'selected' if @application.lender_id == lender.id %>>
+								<%= lender.name %>
+								<i class="glyphicon glyphicon-star"></i>
+							</option>
+						<% end %>
+					</optgroup>
+					<optgroup label="Other">
+						<%= @other_lenders.each do |lender| %>
+						<option value='<%= lender.id %>' <%= 'selected' if @application.lender_id == lender.id %>>
+							<%= lender.name %>
+						</option>
+						<% end %>
+					</optgroup>
+				<% end %>
+		  </div>
+		</div>
+
+	</div>
+
+	<div class="row">
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :activity %>
+				<% selected_activity_id = @application.activity_id.nil? ? 0 : @application.activity_id %>
+		    <%= f.select :activity_id, options_for_select(@activity_options_list, selected: selected_activity_id, disabled: 0), {}, class: 'form-control' %>
+		  </div>
+		</div>
+
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :owner_id %>
+		    <!-- <%= f.text_field :owner_id, class: 'form-control' %> -->
+				<% selected_owner_id = @application.owner_id.nil? ? current_user.id : @application.owner_id %>
+				<%= f.select :owner_id, @user_options_list, { selected: selected_owner_id }, class: 'form-control' %>
+		  </div>
+
+		</div>
+
+		<div class="col-md-4">
+			<div class="form-group">
+		    <%= f.label :waiting_on %>
+		    <%= f.text_field :waiting_on, class: 'form-control' %>
+		  </div>
+		</div>
+	</div>
+
+	<%= f.hidden_field :company_id %>
+
+  <div class="actions">
+    <%= f.submit 'Save', class: 'btn btn-primary pull-right'%>
+		<%= link_to 'Cancel', @cancel_path, class: 'btn btn-default' %>
+  </div>
+<% end %>

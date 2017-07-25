@@ -1,14 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Apptrack</title>
+    <title><%= full_title(yield(:title)) %></title>
     <%= csrf_meta_tags %>
-
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
 
   <body>
-    <%= yield %>
+		<%= render 'partials/navbar' %>
+		<div class="container">
+
+			<div class="row">
+				<% flash.each do |message_type, message| %>
+					<div class="alert alert-<%= message_type %>">
+						<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<%= message %>
+					</div>
+				<% end %>
+			</div>
+			<%= yield %>
+		</div>
   </body>
 </html>
